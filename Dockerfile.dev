@@ -1,0 +1,12 @@
+########################################################
+# Development build                                    #
+########################################################
+FROM guyaltd/python:ml AS development
+
+# Workdir
+ENV WORK_DIR /usr/src/app
+WORKDIR ${WORK_DIR}
+
+COPY . .
+
+CMD flask run
