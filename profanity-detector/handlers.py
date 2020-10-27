@@ -35,14 +35,21 @@ from flask import jsonify
 from werkzeug.exceptions import HTTPException, default_exceptions
 
 
-def register_handler(app):
+def register_handler(app) -> None:
     """Registers the error handler is a function to common error HTTP codes
 
     Parameters:
     ----------
         app (flask.app.Flask): The application instance.
     """
-    
+
+    ################################################################
+    #
+    # generic error handlers
+    #
+    ################################################################
+
+    # http codes generic error handler
     def generic_http_error_handler(error):
         """Deal with HTTP exceptions.
 
@@ -56,20 +63,26 @@ def register_handler(app):
         """
         if isinstance(error, HTTPException):
             result = {
-                'code': error.code, 
-                'description': error.description, 
-                'type': 'HTTPException',
-                'message': str(error)}
+                'status_code': error.code,
+                'status': error.description,
+                'message': "Flask Http Exception",
+                'error': {
+                    'message': str(error),
+                    'type': 'HTTPException'
+                }}
         else:
             result = {
-                'code': 500, 
-                'description': 'Internal Server Error',
-                'type': 'Other Exceptions',
-                'message': str(error)}
+                'status_code': 500,
+                'status': 'Internal Server Error',
+                'message': "Flask Http Exception",
+                'error': {
+                    'message': str(error),
+                    'type': 'Exception'
+                }}
 
-        #logger.exception(str(error), extra=result.update(EXTRA))
+        log_exception(error = error, extra = result)
         resp = jsonify(result)
-        resp.status_code = result['code']
+        resp.status_code = result['status_code']
         return resp
 
     # register http code errors
