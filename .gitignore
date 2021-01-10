@@ -1,3 +1,5 @@
+venv/
+
 # Python vertual environment
 bin/
 lib64/

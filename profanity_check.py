@@ -23,10 +23,10 @@ def startLearning(lang, data):
 
 
 # Read in data
-data_en = pd.read_csv('../corpus/offensive-language.csv')
-data_am = pd.read_csv('../corpus/profanity_am.csv')
+#data_en = pd.read_csv('./corpus/offensive-language.csv')
+data_am = pd.read_csv('./corpus/profanity_am.csv')
 
-print("English")
-startLearning('en', data_en)
+#print("English")
+#startLearning('en', data_en)
 print("Amharic")
 startLearning('am', data_am)
